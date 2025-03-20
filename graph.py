@@ -370,6 +370,16 @@ if __name__ == "__main__":
     while True:
         try:
             prompt = input("Prompt: ")
+
+            # If empty prompt, continue
+            if prompt.strip() == "":
+                print("Prompt is empty. Please enter something.")
+                continue
+            # If just equal to exit, break the loop
+            if prompt == "exit":
+                break
+
+            # Else start chatting
             ai_response = chat(prompt)
             print(ai_response)
         except openai.APIConnectionError as e:
