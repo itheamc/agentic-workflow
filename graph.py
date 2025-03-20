@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 from dataclasses import dataclass
 from typing import Union, List
@@ -375,6 +376,6 @@ if __name__ == "__main__":
         except openai.AuthenticationError as e:
             print(f"[AuthenticationError] {e.response.json()["error"]["message"]}")
         except openai.APIError as e:
-            print(f"[APIError] {e.message}")
+            print(f"[APIError] {e.body['message'] if type(e.body) is dict  else e.message}")
         except Exception as e:
             print(f"[OtherError] {e}")
