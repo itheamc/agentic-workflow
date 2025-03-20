@@ -3,6 +3,7 @@ import os
 from dataclasses import dataclass
 from typing import Union, List
 
+import openai
 import requests
 from langchain.chat_models import init_chat_model
 from langchain.tools import Tool
@@ -365,6 +366,15 @@ def chat(user_input):
 
 if __name__ == "__main__":
     while True:
-        prompt = input("Prompt: ")
-        ai_response = chat(prompt)
-        print(ai_response)
+        try:
+            prompt = input("Prompt: ")
+            ai_response = chat(prompt)
+            print(ai_response)
+        except openai.APIConnectionError as e:
+            print(f"[ConnectionError] {e.message}")
+        except openai.AuthenticationError as e:
+            print(f"[AuthenticationError] {e.response.json()["error"]["message"]}")
+        except openai.APIError as e:
+            print(f"[APIError] {e.message}")
+        except Exception as e:
+            print(f"[OtherError] {e}")
