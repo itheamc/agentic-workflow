@@ -7,7 +7,7 @@ import openai
 import requests
 from langchain.chat_models import init_chat_model
 from langchain.tools import Tool
-from langchain_core.messages import HumanMessage, BaseMessage, AIMessage
+from langchain_core.messages import HumanMessage, BaseMessage, AIMessage, SystemMessage
 from langgraph.graph import StateGraph
 from langgraph.prebuilt import create_react_agent
 
@@ -324,7 +324,9 @@ graph.set_entry_point("agent")
 agent_executor = graph.compile()
 
 # Maintain conversation history
-conversation_history = []
+conversation_history: list[BaseMessage] = [
+    SystemMessage(content="you're a funniest assistant"),
+]
 
 
 # Extracting AI Response
@@ -375,6 +377,6 @@ if __name__ == "__main__":
         except openai.AuthenticationError as e:
             print(f"[AuthenticationError] {e.response.json()["error"]["message"]}")
         except openai.APIError as e:
-            print(f"[APIError] {e.body['message'] if type(e.body) is dict  else e.message}")
+            print(f"[APIError] {e.body['message'] if type(e.body) is dict else e.message}")
         except Exception as e:
             print(f"[OtherError] {e}")
