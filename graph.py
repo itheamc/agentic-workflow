@@ -261,9 +261,9 @@ def current_weather_of(city: str) -> Union[list[dict], dict, None]:
 
 
 info = Tool(
-    name="GetMyInfo",
+    name="GetMyInformation",
     func=my_info,
-    description="Get information about me"
+    description="Get all the information about me"
 )
 
 hello = Tool(
